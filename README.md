@@ -1,4 +1,40 @@
 # Semantic Segmentation
+
+[//]: # (Image References)
+
+[image1]: ./runs/1.jpg ""
+[image2]: ./runs/2.jpg ""
+[image3]: ./runs/3.jpg ""
+[image4]: ./runs/4.jpg ""
+[image5]: ./runs/5.jpg ""
+[image6]: ./runs/6.jpg ""
+
+### Goal
+The goal of this project is to find drivable road area by semantic segmentation using a Fully Convolutional Network (FCN) based on the VGG-16.
+
+### Description
+#### Hyperparameters
+- epochs: 50
+- batch size: 5
+- keep_prob: 0.7
+- learning_rate: 0.001
+
+#### Result
+Result is saved in the `./runs/` folder.
+Below images are some samples of the result.
+
+![][image1]
+![][image2]
+![][image3]
+![][image4]
+![][image5]
+![][image6]
+
+There are some misclassified pixels. 
+
+
+--------
+# Instruction from original README in udacity repository
 ### Introduction
 In this project, you'll label the pixels of a road in images using a Fully Convolutional Network (FCN).
 
