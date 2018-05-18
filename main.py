@@ -57,25 +57,31 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     # TODO: Implement function
     # 1x1 convolution layer for vgg layer7
     l7_out = tf.layers.conv2d(vgg_layer7_out, num_classes, 1, padding='same',
+                                    kernel_initializer=tf.random_normal_initializer(stddev=0.01),
                                     kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     # upsample
     l4_in1 = tf.layers.conv2d_transpose(l7_out, num_classes, 4, strides=(2,2), padding='same',
+                                            kernel_initializer=tf.random_normal_initializer(stddev=0.01),
                                             kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     # 1x1 convolution layer for vgg layer4
     l4_in2 = tf.layers.conv2d(vgg_layer4_out, num_classes, 1, padding='same',
+                                    kernel_initializer=tf.random_normal_initializer(stddev=0.01),
                                     kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     # skip connections (element-wise addition)
     l4_out = tf.add(l4_in1, l4_in2)
     # upsample
     l3_in1 = tf.layers.conv2d_transpose(l4_out, num_classes, 4, strides=(2,2), padding='same',
+                                            kernel_initializer=tf.random_normal_initializer(stddev=0.01),
                                             kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     # 1x1 convolution layer for vgg layer3
     l3_in2 = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, padding='same',
+                                    kernel_initializer=tf.random_normal_initializer(stddev=0.01),
                                     kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     # skip connections (element-wise addition)
     l3_out = tf.add(l3_in1, l3_in2)
     # upsample
     output = tf.layers.conv2d_transpose(l3_out, num_classes, 16, strides=(8,8), padding='same',
+                                        kernel_initializer=tf.random_normal_initializer(stddev=0.01),
                                         kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     tf.Print(output, [tf.shape(output)[1:3]])
@@ -122,15 +128,15 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
     :param learning_rate: TF Placeholder for learning rate
     """
     # TODO: Implement function
+    print("Start training ... \n")
     sess.run(tf.global_variables_initializer())
 
-    print("Start training ... \n")
     for i in range(epochs):
-        print("Epoch {}".format(i+1))
+        print("Epoch #{}".format(i+1))
         for image, label in get_batches_fn(batch_size):
             # Training
-            _, loss = sess.run([train_op, cross_entropy_loss], feed_dict={input_image: image, correct_label: label, keep_prob: 0.5, learning_rate: 0.0009})
-            print("Loss = {:.3f}".format(loss))
+            _, loss = sess.run([train_op, cross_entropy_loss], feed_dict={input_image: image, correct_label: label, keep_prob: 0.7, learning_rate: 0.0005})
+            print("loss = {:.3f}".format(loss))
         print("\n")
 tests.test_train_nn(train_nn)
 
@@ -149,8 +155,9 @@ def run():
     # You'll need a GPU with at least 10 teraFLOPS to train on.
     #  https://www.cityscapes-dataset.com/
 
-    gpu_options = tf.GPUOptions(allow_growth=True)
-    with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
+    #gpu_options = tf.GPUOptions(allow_growth=True)
+    # with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
+    with tf.Session() as sess:
         # Path to vgg model
         vgg_path = os.path.join(data_dir, 'vgg')
         # Create function to get batches
@@ -161,7 +168,7 @@ def run():
 
         # TODO: Build NN using load_vgg, layers, and optimize function
         epochs = 50
-        batch_size = 1
+        batch_size = 5
 
         # TF placeholders
         correct_label = tf.placeholder(tf.int32, [None, None, None, num_classes], name='correct_label')
