@@ -2,12 +2,16 @@
 
 [//]: # (Image References)
 
-[image1]: ./runs/1.jpg ""
-[image2]: ./runs/2.jpg ""
-[image3]: ./runs/3.jpg ""
-[image4]: ./runs/4.jpg ""
-[image5]: ./runs/5.jpg ""
-[image6]: ./runs/6.jpg ""
+[image1]: ./runs/1526699620.1120403/um_000003.png ""
+[image2]: ./runs/1526699620.1120403/um_000007.png ""
+[image3]: ./runs/1526699620.1120403/um_000010.png ""
+[image4]: ./runs/1526699620.1120403/um_000024.png ""
+[image5]: ./runs/1526699620.1120403/um_000032.png ""
+[image6]: ./runs/1526699620.1120403/um_000061.png ""
+[image7]: ./runs/1526699620.1120403/um_000075.png ""
+[image8]: ./runs/1526699620.1120403/umm_000071.png ""
+[image9]: ./runs/1526699620.1120403/uu_000067.png ""
+[image10]: ./runs/1526699620.1120403/uu_000085.png ""
 
 ### Goal
 The goal of this project is to find drivable road area by semantic segmentation using a Fully Convolutional Network (FCN) based on the VGG-16.
@@ -30,6 +34,10 @@ Below images are some samples of the result.
 ![][image4]
 ![][image5]
 ![][image6]
+![][image7]
+![][image8]
+![][image9]
+![][image10]
 
 There are some misclassified pixels. 
 
