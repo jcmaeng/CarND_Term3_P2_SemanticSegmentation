@@ -1,4 +1,4 @@
-# Semantic Segmentation
+# Semantic Segmentation Project
 
 [//]: # (Image References)
 
@@ -15,12 +15,13 @@ The goal of this project is to find drivable road area by semantic segmentation 
 ### Description
 #### Hyperparameters
 - epochs: 50
-- batch size: 5
-- keep_prob: 0.7
-- learning_rate: 0.001
+- batch size: 10
+- keep_prob: 0.5
+- learning_rate: 0.005
 
 #### Result
 Result is saved in the `./runs/` folder.
+
 Below images are some samples of the result.
 
 ![][image1]

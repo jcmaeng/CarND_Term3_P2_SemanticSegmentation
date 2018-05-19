@@ -105,6 +105,8 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes):
 
     # define loss function
     cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=correct_label))
+
+    # optimizer
     optimizer = tf.train.AdamOptimizer(learning_rate)
     train_op = optimizer.minimize(cross_entropy_loss)
 
@@ -135,7 +137,7 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
         print("Epoch #{}".format(i+1))
         for image, label in get_batches_fn(batch_size):
             # Training
-            _, loss = sess.run([train_op, cross_entropy_loss], feed_dict={input_image: image, correct_label: label, keep_prob: 0.7, learning_rate: 0.001})
+            _, loss = sess.run([train_op, cross_entropy_loss], feed_dict={input_image: image, correct_label: label, keep_prob: 0.5, learning_rate: 0.0005})
             print("loss = {:.3f}".format(loss))
         print("\n")
 tests.test_train_nn(train_nn)
@@ -167,15 +169,20 @@ def run():
         #  https://datascience.stackexchange.com/questions/5224/how-to-prepare-augment-images-for-neural-network
 
         # TODO: Build NN using load_vgg, layers, and optimize function
-        epochs = 15
+        epochs = 50
         batch_size = 10
 
-        # TF placeholders
+        # placeholders
         correct_label = tf.placeholder(tf.int32, [None, None, None, num_classes], name='correct_label')
         learning_rate = tf.placeholder(tf.float32, name='learning_rate')
 
+        # load trained VGG-16 model
         input_image, keep_prob, layer3_out, layer4_out, layer7_out = load_vgg(sess, vgg_path)
+
+        # build model with skip layers
         layer_output = layers(layer3_out, layer4_out, layer7_out, num_classes)
+
+        # optimizer
         logits, train_op, cross_entropy_loss = optimize(layer_output, correct_label, learning_rate, num_classes)
 
         # TODO: Train NN using the train_nn function
